@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:revvai/otp_screen.dart';
+import 'package:revvai/registration_screen.dart';
 void main() {
   runApp(MyApp());
 }
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
                   width: 60.0,
                   height: 60.0,
                   child: Image.asset(
-                    'assets/revv.png',
+                    'assets/images/revv.png',
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -74,7 +75,7 @@ class MyApp extends StatelessWidget {
                 height: 40,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Navigator.push(context,MaterialPageRoute(builder: (context)=> _HomeState()));
+                    Navigator.push(context,MaterialPageRoute(builder: (context)=> Home(title: '',)));
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -102,7 +103,7 @@ class MyApp extends StatelessWidget {
                 height: 40,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Navigator.push(context,MaterialPageRoute(builder: (context)=> _HomeState()));
+                     Navigator.push(context,MaterialPageRoute(builder: (context)=> WelcomeScreen()));
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(

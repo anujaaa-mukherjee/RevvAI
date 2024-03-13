@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  const Home({super.key, required String title});
 
   @override
   State<Home> createState() => _HomeState();
@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
                     children: [
                       Row(children: [
                         Image.asset(
-                          'assets/images/proj_icon.png',
+                          'assets/images/revv.png',
                           width: 90,
                           height: 100,
                           fit: BoxFit.cover,
@@ -99,7 +99,7 @@ class _HomeState extends State<Home> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(' Resend OTP in'),
-                          TextButton(
+                          ElevatedButton(
                               onPressed: null,
                               child: Text(
                                 'Change Mobile Number',
