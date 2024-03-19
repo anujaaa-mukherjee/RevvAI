@@ -1,4 +1,5 @@
 # revvai
+A revision app for 11th and 12th grads preparing for JEE
 
 A new Flutter project.
 
