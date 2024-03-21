@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "554659430337",
+    "project_id": "revvai-1b45f",
+    "storage_bucket": "revvai-1b45f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:554659430337:android:d7ddca3ff4701bb519f940",
+        "android_client_info": {
+          "package_name": "com.example.revvai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJuN-EX4UNGY39es_kd-BKhtKFxiBRK80"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
