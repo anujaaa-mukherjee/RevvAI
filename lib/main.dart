@@ -10,10 +10,10 @@ void main() async {
   Platform.isAndroid
       ? await Firebase.initializeApp(
           options: const FirebaseOptions(
-          apiKey: "AIzaSyAJuN-EX4UNGY39es_kd-BKhtKFxiBRK80",
-          appId: "1:554659430337:android:d7ddca3ff4701bb519f940",
-          messagingSenderId: "554659430337",
-          projectId: "revvai-1b45f",
+          apiKey: "AIzaSyBZ-fO8AwjpacuD-MgVW-tAo_4Z3hrT0DA",
+          appId: "1:521929180258:android:3486d774d5b88f6a5b7d3b",
+          messagingSenderId: "521929180258",
+          projectId: "revvai",
         ))
       : await Firebase.initializeApp();
   runApp(const MyApp());
@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'RevvAi',
+      debugShowCheckedModeBanner: false,
       home: Home(
         title: 'HomePage',
         verificationid: '',

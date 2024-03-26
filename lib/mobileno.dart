@@ -1,12 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
 import 'package:revvai/otp_screen.dart';
 import 'package:revvai/registration_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
-  // await Firebase.initializeApp();
+  await Firebase.initializeApp();
 }
 
 class MyApp extends StatefulWidget {
@@ -16,6 +18,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   TextEditingController phoneController = TextEditingController();
+
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
@@ -82,6 +85,7 @@ class _MyAppState extends State<MyApp> {
                 keyboardType: TextInputType.phone,
                 maxLength: 13,
                 decoration: InputDecoration(
+                  // prefixText: "+91 ",
                   contentPadding: const EdgeInsets.symmetric(
                       vertical: 8.0, horizontal: 12.0),
                   border: OutlineInputBorder(

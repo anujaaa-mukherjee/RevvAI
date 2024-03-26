@@ -14,13 +14,13 @@ class _HomepageState extends State<Homepage> {
       appBar: AppBar(
         title: const Text("RevvAI"),
         titleTextStyle: const TextStyle(
-          color: Color.fromARGB(255, 255, 255, 255),
+          color: Colors.blueAccent,
           fontSize: 35.0,
           fontWeight: FontWeight.bold,
         ),
         centerTitle: true,
       ),
-      body: const Text('homepage'),
+      body: const Center(child: Text('Homepage')),
     );
   }
 }

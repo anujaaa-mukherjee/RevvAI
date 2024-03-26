@@ -4,7 +4,7 @@ import "dart:developer";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:revvai/homepage.dart";
-import "package:revvai/main.dart";
+import "package:revvai/mobileno.dart";
 // import 'package:firebase_core/firebase_core.dart';
 
 class Home extends StatefulWidget {
@@ -114,7 +114,7 @@ class _HomeState extends State<Home> {
                               FirebaseAuth.instance
                                   .signInWithCredential(credential)
                                   .then((value) {
-                                Navigator.push(
+                                Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                         builder: ((context) => const Homepage(
@@ -164,7 +164,7 @@ class _HomeState extends State<Home> {
                                   ))
                               : ElevatedButton(
                                   onPressed: () {
-                                    resendotp();
+                                    // resendotp();
                                   },
                                   style: ElevatedButton.styleFrom(
                                     shape: const RoundedRectangleBorder(
@@ -198,7 +198,7 @@ class _HomeState extends State<Home> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const MyApp()));
+                                        builder: (context) => MyApp()));
                               },
                               child: const Text(
                                 'Change Mobile Number',
