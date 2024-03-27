@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "521929180258",
+    "firebase_url": "https://revvai-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "revvai",
+    "storage_bucket": "revvai.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:521929180258:android:3486d774d5b88f6a5b7d3b",
+        "android_client_info": {
+          "package_name": "com.example.revvai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZ-fO8AwjpacuD-MgVW-tAo_4Z3hrT0DA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
