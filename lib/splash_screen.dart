@@ -1,7 +1,7 @@
 //splash screen
 
 import 'package:flutter/material.dart';
-import 'package:revvai/mobileno.dart';
+// import 'package:revvai/mobileno.dart';
 import 'package:revvai/user_status.dart';
 
 class splash extends StatefulWidget {
