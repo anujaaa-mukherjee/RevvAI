@@ -1,3 +1,5 @@
+import "package:cloud_firestore/cloud_firestore.dart";
+import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 
 class SessionScreen extends StatefulWidget {
@@ -8,11 +10,45 @@ class SessionScreen extends StatefulWidget {
 }
 
 class _SessionScreenState extends State<SessionScreen> {
-  final List mathsTopics = ["Calculus", "Binomial Theorem"];
+  User? user = FirebaseAuth.instance.currentUser;
+  final List mathsTopics = [];
+  final List physicsTopics = [];
+  final List chemTopics = [];
 
-  final List physicsTopics = ["Gravitation", "Laws of Motion"];
+  fetchData() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .collection("topics")
+        .get();
 
-  final List chemTopics = ["Ionic Bonds", "Carbon Compounds"];
+    for (var element in querySnapshot.docs) {
+      print(element.data());
+      Map<String, dynamic> data = element.data() as Map<String, dynamic>;
+      if (data["subject"] == "physics") {
+        setState(() {
+          physicsTopics.add(element.id);
+        });
+      }
+      if (data["subject"] == "chemistry") {
+        setState(() {
+          chemTopics.add(element.id);
+        });
+      }
+      if (data["subject"] == "maths") {
+        setState(() {
+          mathsTopics.add(element.id);
+        });
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,22 +90,28 @@ class _SessionScreenState extends State<SessionScreen> {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 27),
                         ),
-                        Expanded(
-                          child: ListView.builder(
-                              itemCount: mathsTopics.length,
-                              itemBuilder: (context, index) {
-                                int index2 = index + 1;
-                                return Text(
-                                  "Topic " +
-                                      index2.toString() +
-                                      ": " +
-                                      mathsTopics[index],
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 27),
-                                );
-                              }),
-                        ),
+                        mathsTopics.isEmpty
+                            ? const Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.black,
+                                ),
+                              )
+                            : Expanded(
+                                child: ListView.builder(
+                                    itemCount: mathsTopics.length,
+                                    itemBuilder: (context, index) {
+                                      int index2 = index + 1;
+                                      return Text(
+                                        "Topic " +
+                                            index2.toString() +
+                                            ": " +
+                                            mathsTopics[index],
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 27),
+                                      );
+                                    }),
+                              ),
                       ],
                     ),
                   ),
@@ -91,7 +133,13 @@ class _SessionScreenState extends State<SessionScreen> {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 27),
                         ),
-                        Expanded(
+                        physicsTopics.isEmpty
+                            ? const Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.black,
+                                ),
+                              )
+                            :Expanded(
                           child: ListView.builder(
                               itemCount: physicsTopics.length,
                               itemBuilder: (context, index) {
@@ -128,7 +176,13 @@ class _SessionScreenState extends State<SessionScreen> {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 27),
                         ),
-                        Expanded(
+                        chemTopics.isEmpty
+                            ? const Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.black,
+                                ),
+                              )
+                            :Expanded(
                           child: ListView.builder(
                               itemCount: chemTopics.length,
                               itemBuilder: (context, index) {

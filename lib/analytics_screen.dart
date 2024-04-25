@@ -37,6 +37,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
     for (var element in topThreeDocs) {
       print(element.id);
+      if (!context.mounted) return;
       setState(() {
         topThree.add(element.id);
       });
