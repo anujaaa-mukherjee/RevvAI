@@ -1,17 +1,14 @@
-//splash screen
-
 import 'package:flutter/material.dart';
-// import 'package:revvai/mobileno.dart';
 import 'package:revvai/user_status.dart';
 
-class splash extends StatefulWidget {
-  const splash({super.key});
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
 
   @override
-  State<splash> createState() => _MyWidgetState();
+  State<SplashScreen> createState() => _MyWidgetState();
 }
 
-class _MyWidgetState extends State<splash> {
+class _MyWidgetState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
@@ -19,13 +16,15 @@ class _MyWidgetState extends State<splash> {
   }
 
   _navigatetohome() async {
-    await Future.delayed(Duration(seconds: 2), () {});
-    Navigator.pushReplacement(context as BuildContext,
-        MaterialPageRoute(builder: (context) => start()));
+    await Future.delayed(const Duration(seconds: 2), () {});
+    if (!context.mounted) return;
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => const AuthStateCkeck()));
   }
-
+  
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
         body: Center(
             child: Image(
       image: AssetImage('assets/images/revv.png'),

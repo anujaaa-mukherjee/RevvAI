@@ -1,21 +1,39 @@
 import "dart:async";
 import "dart:developer";
-// import "dart:ffi";
+import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
-import "package:revvai/homepage.dart";
-import "package:revvai/mobileno.dart";
-// import 'package:firebase_core/firebase_core.dart';
+import "package:revvai/initial_screen.dart";
+import "package:revvai/login/login_screen.dart";
 
-class Home extends StatefulWidget {
-  String verificationid;
-  Home({super.key, required this.verificationid, required String title});
+class OtpScreen extends StatefulWidget {
+  final String verificationid;
+  final bool register;
+  final String name;
+  final int age;
+  final String gender;
+  final String selectedClass;
+  final String selectedExam;
+  final String mobileNumber;
+  final String email;
+  const OtpScreen({
+    super.key,
+    required this.verificationid,
+    required this.register,
+    required this.name,
+    required this.age,
+    required this.selectedClass,
+    required this.selectedExam,
+    required this.gender,
+    required this.mobileNumber,
+    required this.email,
+  });
 
   @override
-  State<Home> createState() => _HomeState();
+  State<OtpScreen> createState() => _OTPState();
 }
 
-class _HomeState extends State<Home> {
+class _OTPState extends State<OtpScreen> {
   TextEditingController otpController = TextEditingController();
   String otp = '';
   Timer? _timer;
@@ -114,11 +132,35 @@ class _HomeState extends State<Home> {
                               FirebaseAuth.instance
                                   .signInWithCredential(credential)
                                   .then((value) {
-                                Navigator.pushReplacement(
+                                if (widget.register == true) {
+                                  User? user =
+                                      FirebaseAuth.instance.currentUser;
+                                      print(user!.uid);
+                                  FirebaseFirestore.instance
+                                      .collection("users")
+                                      .doc(user.uid)
+                                      .set({
+                                    "name": widget.name,
+                                    "age": widget.age,
+                                    "gender": widget.gender,
+                                    "selectedClass": widget.selectedClass,
+                                    "selectedExam": widget.selectedExam,
+                                    "mobileNumber": widget.mobileNumber,
+                                    "email": widget.email,
+                                  });
+                                  Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: ((context) => const Homepage(
-                                            title: "homepage"))));
+                                        builder: ((context) =>
+                                            const InitialScreen(newRegister: true,))));
+                                } else {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: ((context) =>
+                                            const InitialScreen(newRegister: false,))));
+                                }
+                                
                               });
                             } catch (ex) {
                               log(ex.toString());
@@ -198,7 +240,8 @@ class _HomeState extends State<Home> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => MyApp()));
+                                        builder: (context) =>
+                                            const LoginScreen()));
                               },
                               child: const Text(
                                 'Change Mobile Number',

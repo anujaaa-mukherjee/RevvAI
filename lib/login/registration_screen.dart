@@ -1,30 +1,48 @@
-// registration screen //
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:revvai/login/auth_methods.dart';
 
 class WelcomeScreen extends StatefulWidget {
+  const WelcomeScreen({super.key});
+
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   final _formKey = GlobalKey<FormState>();
+  AuthMethods auth = AuthMethods();
 
-  String? selectedClass;
-  String? selectedStatus;
-  String? gender;
-  String? occupation;
+  late String selectedClass;
+  late String selectedExam;
+  late String gender;
+  late String mobileNumber;
+  late String email;
+  int age = 0;
   TextEditingController nameController = TextEditingController();
-  TextEditingController ageController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    nameController.text = "";
+    selectedClass = "Class 11";
+    selectedExam = "JEE";
+    gender = "Male";
+    mobileNumber = "";
+  }
 
   void _refreshForm() {
-    _formKey.currentState?.reset();
-    nameController.clear();
-    ageController.clear();
-    selectedClass = null;
-    selectedStatus = null;
-    gender = null;
-    occupation = null;
+    setState(() {
+      _formKey.currentState?.reset();
+      nameController.clear();
+      age = 0;
+      selectedClass = "Class 11";
+      selectedExam = "JEE";
+      gender = "Male";
+      mobileNumber = "";
+      email = "";
+    });
   }
 
   @override
@@ -33,19 +51,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(
-            title: Container(
-              child: SizedBox(
-                width: 60.67,
-                height: 160.0,
-                child: Image.asset('assets/images/revv.png'),
-              ),
+            title: SizedBox(
+              width: 60.67,
+              height: 160.0,
+              child: Image.asset('assets/images/revv.png'),
             ),
           ),
           body: SingleChildScrollView(
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Padding(
-                padding: EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -56,21 +72,21 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         style: TextStyle(
                             fontSize: 24.0, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 16.0),
+                      const SizedBox(height: 16.0),
                       const Text(
                         "A few more and you're all set!", // Additional text
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w600),
                       ),
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 20.0),
                       const Text(
                         'Name', // Heading
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.0),
                           border: Border.all(
@@ -78,14 +94,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             width: 1.0,
                           ),
                         ),
-                        child: const TextField(
-                          decoration: InputDecoration(
+                        child: TextField(
+                          controller: nameController,
+                          decoration: const InputDecoration(
                             hintText: 'Enter Your Name Here',
                             border: InputBorder.none,
                           ),
                         ),
                       ),
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 20.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -97,10 +114,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 style: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(height: 10.0),
+                              const SizedBox(height: 10.0),
                               Container(
                                 width: 120.0,
-                                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8.0),
                                   border: Border.all(
@@ -108,10 +126,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                     width: 1.0,
                                   ),
                                 ),
-                                child: const TextField(
-                                  keyboardType: TextInputType
-                                      .number, // Set keyboard type to number
-                                  decoration: InputDecoration(
+                                child: TextFormField(
+                                  onChanged: (value) {
+                                    setState(() {
+                                      age = int.parse(value);
+                                    });
+                                  },
+                                  keyboardType: TextInputType.number,
+                                  decoration: const InputDecoration(
                                     hintText: 'Enter Age in Years',
                                     border: InputBorder.none,
                                   ),
@@ -127,43 +149,45 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 style: TextStyle(
                                     fontSize: 15, fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(height: 10.0),
+                              const SizedBox(height: 10.0),
                               Row(
                                 children: [
                                   Radio(
                                     value: 'Male',
                                     groupValue: gender,
                                     onChanged: (String? value) {
-                                      // Handle radio button selection
-                                      gender = value;
+                                      setState(() {
+                                        gender = value!;
+                                      });
                                     },
                                   ),
-                                  Text('Male'),
-                                  SizedBox(width: 20),
+                                  const Text('Male'),
+                                  const SizedBox(width: 20),
                                   Radio(
                                     value: 'Female',
                                     groupValue: gender,
                                     onChanged: (String? value) {
-                                      // Handle radio button selection
-                                      gender = value;
+                                      setState(() {
+                                        gender = value!;
+                                      });
                                     },
                                   ),
-                                  Text('Female'),
+                                  const Text('Female'),
                                 ],
                               ),
                             ],
                           ),
                         ],
                       ),
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 20.0),
                       const Text(
                         'Class', // Heading
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.0),
                           border: Border.all(
@@ -175,14 +199,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           isExpanded: true,
                           value: selectedClass,
                           onChanged: (String? newValue) {
-                            // Handle dropdown value change
-                            selectedClass = newValue;
-                          },
-                          onSaved: (value) {
-                            selectedClass = value;
+                            setState(() {
+                              selectedClass = newValue!;
+                            });
                           },
                           decoration: const InputDecoration(
-                            hintText: 'Select Status',
+                            hintText: 'Select Class',
                             border: InputBorder.none,
                           ),
                           items: <String>['Class 11', 'Class 12']
@@ -194,15 +216,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           }).toList(),
                         ),
                       ),
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 20.0),
                       const Text(
                         'Focus Exam', // Heading
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.0),
                           border: Border.all(
@@ -212,19 +234,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         ),
                         child: DropdownButtonFormField<String>(
                           isExpanded: true,
-                          value: selectedStatus,
+                          value: selectedExam,
                           onChanged: (String? newValue) {
-                            // Handle dropdown value change
-                            selectedStatus = newValue;
-                          },
-                          onSaved: (value) {
-                            selectedStatus = value;
+                            setState(() {
+                              selectedExam = newValue!;
+                            });
                           },
                           decoration: const InputDecoration(
-                            hintText: 'Select Blood Group',
+                            hintText: 'Select your target exam',
                             border: InputBorder.none,
                           ),
-                          items: <String>['A+', 'B+', 'O+', 'AB+']
+                          items: <String>['JEE', 'NEET']
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
@@ -233,15 +253,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           }).toList(),
                         ),
                       ),
-                      SizedBox(height: 20.0),
+                      const SizedBox(height: 20.0),
                       const Text(
-                        'Occupation', // Heading
+                        'Mobile Number', // Heading
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.0),
                           border: Border.all(
@@ -251,15 +271,48 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         ),
                         child: TextField(
                           onChanged: (value) {
-                            occupation = value;
+                            setState(() {
+                              mobileNumber = value;
+                            });
                           },
+                          maxLength: 10,
                           decoration: const InputDecoration(
-                            hintText: 'Enter Your occupation',
+                            hintText: 'Enter Your Mobile Number',
                             border: InputBorder.none,
                           ),
                         ),
                       ),
-                      SizedBox(height: 27.0),
+                      const SizedBox(height: 20.0),
+                      const Text(
+                        'Email ID', // Heading
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 1.0,
+                          ),
+                        ),
+                        child: TextField(
+                          onChanged: (value) {
+                            setState(() {
+                              email = value;
+                            });
+                          },
+                          decoration: const InputDecoration(
+                            hintText: 'Enter Your Email Id',
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 27.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -272,16 +325,54 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             ),
                             child: IconButton(
                               onPressed: _refreshForm,
-                              icon: Icon(Icons.refresh),
+                              icon: const Icon(Icons.refresh),
                               color: Colors.blue,
                             ),
                           ),
                           Expanded(
                             child: ElevatedButton(
                               onPressed: () {
-                                if (_formKey.currentState?.validate() ??
-                                    false) {
-                                  //  Navigator.push(context,MaterialPageRoute(builder: (context)=> Home(title: '',)));
+                                if (selectedClass == "" ||
+                                    selectedExam == "" ||
+                                    gender == "" ||
+                                    mobileNumber == "" ||
+                                    nameController.text == "" ||
+                                    age == 0) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                            title: const Text(
+                                                "All fields are required"),
+                                            content: const Text(
+                                                "Please fill all the fields."),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text("OK"),
+                                              ),
+                                            ],
+                                          ));
+                                  return;
+                                } else {
+                                  print(nameController.text);
+                                  print(age);
+                                  print(gender);
+                                  print(selectedClass);
+                                  print(selectedExam);
+                                  print("+91$mobileNumber");
+                                  print(email);
+                                  auth.register(
+                                    context,
+                                    nameController.text,
+                                    age,
+                                    gender,
+                                    selectedClass,
+                                    selectedExam,
+                                    "+91$mobileNumber",
+                                    email,
+                                  );
                                 }
                               },
                               style: ButtonStyle(
@@ -305,8 +396,4 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ),
         ));
   }
-}
-
-void main() {
-  runApp(WelcomeScreen());
 }

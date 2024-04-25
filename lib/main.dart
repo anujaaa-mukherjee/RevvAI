@@ -1,11 +1,15 @@
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:revvai/registration_screen.dart';
-import 'package:revvai/otp_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
+import 'package:revvai/login/login_screen.dart';
+import 'package:revvai/login/registration_screen.dart';
+import 'package:revvai/provider/app_provider.dart';
 import 'package:revvai/splash_screen.dart';
 
 void main() async {
+  await dotenv.load();
   WidgetsFlutterBinding.ensureInitialized();
   Platform.isAndroid
       ? await Firebase.initializeApp(
@@ -24,26 +28,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'RevvAi',
-      debugShowCheckedModeBanner: false,
-      home: Home(
-        title: 'HomePage',
-        verificationid: '',
+    return ChangeNotifierProvider(
+      create: (context) => AppProvider(),
+      child: MaterialApp(
+        title: 'RevvAi',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        initialRoute: '/splash_screen',
+        routes: {
+          '/splash_screen': (context) => const SplashScreen(),
+          '/login': (context) => const LoginScreen(),
+          '/registration': (context) => const WelcomeScreen(),
+          
+        },
       ),
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      initialRoute: '/splash_screen',
-      routes: {
-        '/splash_screen': (context) => const splash(),
-        '/mobile_no': (context) => const MyApp(),
-        '/registration': (context) => WelcomeScreen(),
-        '/otp': (context) => Home(
-              title: 'HomePage',
-              verificationid: '',
-            ),
-      },
     );
   }
 }

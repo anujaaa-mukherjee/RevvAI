@@ -1,16 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:revvai/homepage.dart';
-import 'package:revvai/mobileno.dart';
+import 'package:revvai/initial_screen.dart';
+import 'package:revvai/login/login_screen.dart';
 
-class start extends StatefulWidget {
-  const start({super.key});
+class AuthStateCkeck extends StatefulWidget {
+  const AuthStateCkeck({super.key});
 
   @override
-  State<start> createState() => _startState();
+  State<AuthStateCkeck> createState() => _AuthStateCkeckState();
 }
 
-class _startState extends State<start> {
+class _AuthStateCkeckState extends State<AuthStateCkeck> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,9 +18,9 @@ class _startState extends State<start> {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const Homepage(title: "homepage");
+            return const InitialScreen(newRegister: false,);
           } else {
-            return MyApp();
+            return const LoginScreen();
           }
         },
       ),

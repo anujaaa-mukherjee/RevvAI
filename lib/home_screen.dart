@@ -1,22 +1,19 @@
-import "package:flutter/material.dart";
-import "package:revvai/revision_page.dart";
-import "package:flutter/src/widgets/bottom_navigation_bar_item.dart";
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:revvai/edit_topics_screen.dart';
+import 'package:revvai/profile.dart';
+import 'package:revvai/provider/app_provider.dart';
+import 'package:revvai/revision_page.dart';
+import 'package:revvai/subject_topic_screen.dart';
 
-class Homepage extends StatefulWidget {
-  const Homepage({super.key, required String title});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<Homepage> createState() => _HomepageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomepageState extends State<Homepage> {
-  int myIndex = 0;
-  List<Widget> widgetList = const [
-    Homepage(title: "Home"),
-    // analytics screen
-    // Assistance screen
-    // Sessions screen
-  ];
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,50 +22,70 @@ class _HomepageState extends State<Homepage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '     Hello (name)!',
-                  style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'lato'),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "      Let's begin learning...",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Lato'),
-                ),
-                // SizedBox(
-                //   width: 50,
-                //   height: 20,
-                // ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //   // crossAxisAlignment: CrossAxisAlignment.end,
-                //   children: [Icon(Icons.account_circle)],
-                // ),
-              ],
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Hello ${Provider.of<AppProvider>(context, listen: true).data.name}!',
+                        style: const TextStyle(
+                            overflow: TextOverflow.fade,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'lato'),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Text(
+                        "Let's begin learning...",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Lato'),
+                      ),
+                      // SizedBox(
+                      //   width: 50,
+                      //   height: 20,
+                      // ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //   // crossAxisAlignment: CrossAxisAlignment.end,
+                      //   children: [Icon(Icons.account_circle)],
+                      // ),
+                    ],
+                  ),
+                  InkWell(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ProfileScreen(),
+                      ),
+                    ),
+                    child: const Icon(
+                      Icons.account_circle,
+                      size: 50,
+                    ),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 25),
             Center(
               child: Column(
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Start Revision',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: "lato",
-                          fontSize: 20),
-                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Revision(),
+                          ));
+                    },
                     style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
@@ -77,36 +94,45 @@ class _HomepageState extends State<Homepage> {
                             const Color.fromARGB(255, 47, 128, 236),
                         padding: const EdgeInsets.symmetric(
                             horizontal: 115, vertical: 10)),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Previous Sessions',
+                    child: const Text(
+                      'Start Revision',
                       style: TextStyle(
                           color: Colors.white,
                           fontFamily: "lato",
                           fontSize: 20),
                     ),
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        backgroundColor:
-                            const Color.fromARGB(255, 47, 128, 236),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 100, vertical: 10)),
                   ),
+                  // const SizedBox(height: 20),
+                  // ElevatedButton(
+                  //   onPressed: () {},
+                  //   style: ElevatedButton.styleFrom(
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(30.0),
+                  //       ),
+                  //       backgroundColor:
+                  //           const Color.fromARGB(255, 47, 128, 236),
+                  //       padding: const EdgeInsets.symmetric(
+                  //           horizontal: 100, vertical: 10)),
+                  //   child: const Text(
+                  //     'Previous Sessions',
+                  //     style: TextStyle(
+                  //         color: Colors.white,
+                  //         fontFamily: "lato",
+                  //         fontSize: 20),
+                  //   ),
+                  // ),
                   const SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Add topics to Revision',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: "lato",
-                          fontSize: 16),
-                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const TopicSelection(
+                            newRegister: false,
+                          ),
+                        ),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
@@ -114,6 +140,13 @@ class _HomepageState extends State<Homepage> {
                       backgroundColor: const Color.fromARGB(255, 47, 128, 236),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 100, vertical: 12),
+                    ),
+                    child: const Text(
+                      'Add topics to Revision',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: "lato",
+                          fontSize: 16),
                     ),
                   ),
                 ],
@@ -125,8 +158,8 @@ class _HomepageState extends State<Homepage> {
                     decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 254, 215, 76),
                         borderRadius: BorderRadius.circular(30)),
-                    height: 400,
-                    width: 350,
+                    height: 390,
+                    width: 340,
                     child: Column(
                       children: [
                         const SizedBox(
@@ -158,10 +191,19 @@ class _HomepageState extends State<Homepage> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 24),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const SubjectTopicsScreen(
+                                            subject: "maths"),
+                                  ),
+                                );
+                              },
                               child: const Text(
-                                '''  Maths 
-5 Modules''',
+                                "Maths \nModules",
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
@@ -181,9 +223,19 @@ class _HomepageState extends State<Homepage> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 24),
                               ),
-                              onPressed: () {},
-                              child: const Text('''  Physics 
-5 Modules''',
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const SubjectTopicsScreen(
+                                            subject: "physics"),
+                                  ),
+                                );
+                              },
+                              child: const Text(
+                                "Physics \nModules",
+                                textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 18,
@@ -211,10 +263,19 @@ class _HomepageState extends State<Homepage> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 25),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const SubjectTopicsScreen(
+                                              subject: "chemistry"),
+                                    ),
+                                  );
+                                },
                                 child: const Text(
-                                  ''' Chemistry 
-8 Modules''',
+                                  "Chemistry \nModules",
+                                textAlign: TextAlign.center,
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 18,
@@ -233,13 +294,7 @@ class _HomepageState extends State<Homepage> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 12),
                               ),
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => Revision(),
-                                    ));
-                              },
+                              onPressed: () {},
                               child: const Text(
                                 '''   Quiz & 
 Question 
@@ -262,54 +317,6 @@ Question
           ],
         ),
       ),
-      // extendBody: true,
-
-      // IndexedStack(
-      //   index: myIndex,
-      //   children: widgetList,
-      // ),
-      bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: Colors.black,
-          selectedLabelStyle:
-              const TextStyle(color: Colors.black, fontFamily: "lato"),
-          backgroundColor: const Color.fromARGB(255, 47, 128, 236),
-          iconSize: 30,
-          type: BottomNavigationBarType.fixed,
-          showSelectedLabels: true,
-          showUnselectedLabels: false,
-          onTap: (index) {
-            setState(() {
-              myIndex = index;
-            });
-          },
-          currentIndex: myIndex,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-                color: Colors.black,
-              ),
-              label: "Home",
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.analytics,
-                  color: Colors.black,
-                ),
-                label: "Analytics"),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.message,
-                  color: Colors.black,
-                ),
-                label: "Assistance"),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.list,
-                  color: Colors.black,
-                ),
-                label: "Sessions"),
-          ]),
     );
   }
 }
